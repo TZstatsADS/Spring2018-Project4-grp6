@@ -1,26 +1,38 @@
-movie_train<-read.csv(choose.files())
-movie_test<-read.csv(choose.files())
+### This is the R file to calculate the similarity of weights using Mean-squared error
 
-Transformer <- function(data.set){
-  columns.data <- sort(unique(data.set$Movie))
-  rows.data <- sort(unique(data.set$User))
-  Table_ <- matrix(NA,nrow = length(rows.data), ncol = length(columns.data))
-  for(i in 1:length(columns.data)){
-    col.name <- columns.data[i]
-    index <- which(data.set$Movie == col.name)
-    scores <- data.set[index,4] #Scores
-    users <- data.set[index,3] #Users
-    index2 <- which(rows.data %in% users)
-    Table_[index2,i] = scores
-    Table_[!index2,i] = NA
+
+#######################################
+# Mean Squared Difference
+#######################################
+
+# Reduced the computational time significantly by assigning arguments outside 
+# the loops, initiating the output matrix r with NA first, and using apply 
+# to mean() outside the loops.
+
+m_train<-as.matrix(m_train)
+
+mean_sq_diff <- function(matrix){
+  
+  matrix[is.na(matrix)] = 0
+  usermean = apply(matrix,1,mean)
+  
+  ncolrow = nrow(matrix)
+  w <- matrix(rep(NA), ncolrow, ncolrow)
+  rownames(w) = rownames(matrix)
+  colnames(w) = rownames(matrix)
+  
+  for (r in 1:ncolrow){
+    for (c in 1:ncolrow){
+      if (r<c){
+        w[r,c] <- (usermean[r]-usermean[c])^2
+      }
+      else if(r==c){
+        w[r,c] <- 0
+      }
+      else {
+        w[c,r]<-w[r,c]
+      }
+    }
   }
-  colnames(Table_) <- columns.data
-  rownames(Table_) <- rows.data
-  return(Table_)
 }
 
-m_train<-Transformer(movie_train)
-m_test<-Transformer(movie_test)
-
-write.csv(m_train, "Movie_data_train.csv")
-write.csv(m_test, "Movie_data_test.csv")
