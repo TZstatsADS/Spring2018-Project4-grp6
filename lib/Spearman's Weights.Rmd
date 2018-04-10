@@ -1,0 +1,29 @@
+---
+title: "Spearman's Weights"
+author: "Shan He"
+date: "April 8, 2018"
+output: html_document
+---
+
+
+```{r}
+movie_data <- read.csv("data_train.csv")
+
+MS_data <- read.csv("MS_data_train.csv")
+
+new_movie_data <- read.csv("Movie_data_train.csv")
+
+weight_Spearman <- function(data1, dataset_name) {
+  write_file_name <- paste0(dataset_name ,"_Spearman_weights" , ".csv")
+  
+  transformeddata <- t(data1)
+  
+  weights <-  cor(transformeddata, method = "spearman")
+  
+  write.csv(weights, write_file_name)
+}
+
+weight_Spearman(MS_data, "MS")
+
+weight_Spearman(new_movie_data, "Movie")
+```
