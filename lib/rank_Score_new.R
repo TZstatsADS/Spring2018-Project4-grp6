@@ -1,7 +1,7 @@
 ranked_scoring <- function(pred, MS_test, alpha){
   
   visited_ind <- apply(MS_test, 1, function(x){return(which(x==1))})
-  ord <- t(apply(predicted, 1, function(x){return(order(x,decreasing = T))})) #rank list of predicted
+  ord <- t(apply(pred, 1, function(x){return(order(x,decreasing = T))})) #rank list of predicted
   # R_a: Expected utility of a ranked list for user a 
   R_a <- rep(NA, nrow(MS_test))
   R_a_max <- rep(NA, nrow(MS_test))

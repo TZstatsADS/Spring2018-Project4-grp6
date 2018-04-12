@@ -1,11 +1,10 @@
 prediction<-function(df,sim_mat,nbor_list){
   
-  library(matrixStats)
-  
-  df.mean<-matrix(rep(rowMeans(df,na.rm=T),each=ncol(df)),nrow=nrow(df),byrow = T)
-  df.sd<-matrix(rep(rowSds(df,na.rm=T),each=ncol(df)),nrow=nrow(df),byrow = T)
-  
-  df<-ifelse(is.na(df),0,df)
+  df.new<-df   #copy for calculating the mean by control NA.
+  for (i in 1:nrow(df.new)){
+    df.new[i,]<-ifelse(df.new[i,]==0,NA,df.new[i,])
+  }
+  df.mean<-matrix(rep(rowMeans(df.new,na.rm=T),each=ncol(df)),nrow=nrow(df),byrow = T)
   
   pred<-matrix(NA,ncol=ncol(df),nrow=nrow(df))
   
@@ -13,14 +12,16 @@ prediction<-function(df,sim_mat,nbor_list){
     ind<-nbor_list[[i]]
     nbors_mat<-df[ind,]
     w<-as.matrix.data.frame(sim_mat[i,ind]/sum(sim_mat[i,ind]))
-    pred.a<- df.mean[i,1] + (w %*% ((nbors_mat-df.mean[ind,])/df.sd[ind,])) * df.sd[i,1]  
+    pred.a<- df.mean[i,1] + (w %*% ((nbors_mat-df.mean[ind,]))) 
     rm.ind<-which(df[i,]==1)
-    pred.a[rm.ind]<-NA
+    pred.a[rm.ind]<-0
     pred[i,]<-pred.a
   }
   
-  pred<-ifelse(pred<0,0,pred)
-  pred<-ifelse(pred>1,1,pred)
+  for (i in 1:nrow(df)){
+    pred[i,]<-ifelse(pred[i,]<0,0,pred[i,])
+  }  
+
   rownames(pred)<-rownames(df)
   colnames(pred)<-colnames(df)
   
