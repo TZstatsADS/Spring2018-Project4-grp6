@@ -11,8 +11,9 @@ prediction<-function(df,sim_mat,nbor_list){
   for (i in 1:nrow(df)){
     ind<-nbor_list[[i]]
     nbors_mat<-df[ind,]
-    w<-as.matrix.data.frame(sim_mat[i,ind]/sum(sim_mat[i,ind]))
-    pred.a<- df.mean[i,1] + (w %*% ((nbors_mat-df.mean[ind,]))) 
+    w<-as.matrix(sim_mat[i,ind]/sum(sim_mat[i,ind]))
+    nei.demean <- as.matrix(nbors_mat-df.mean[ind,])
+    pred.a<- df.mean[i,1] + (w %*% (nei.demean))
     rm.ind<-which(df[i,]==1)
     pred.a[rm.ind]<-0
     pred[i,]<-pred.a
@@ -21,10 +22,9 @@ prediction<-function(df,sim_mat,nbor_list){
   for (i in 1:nrow(df)){
     pred[i,]<-ifelse(pred[i,]<0,0,pred[i,])
   }  
-
+  
   rownames(pred)<-rownames(df)
   colnames(pred)<-colnames(df)
   
   return(pred)
 }
-
