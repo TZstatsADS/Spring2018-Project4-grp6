@@ -12,7 +12,7 @@ score_estimation <- function(train, test, p){    #p is a list of parameters- mu 
     w[,,k] <- ifelse(t(train)==k, 1, 0)  #give vote 1 if there is a match, 0 otherwise 
     w[,,k] <- ifelse(is.na(w[,,k]),0,w[,,k])
   }
-  w[,,7] <- ifelse(!is.na(t(test_df)), 1, 0)
+  w[,,7] <- ifelse(!is.na(t(test)), 1, 0)
   
   ##probability by Naive Bayes formula ()
   prob <- array(0,c(N,M,7))
