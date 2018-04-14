@@ -11,21 +11,34 @@ find_neighbours<-function(sim_mat,method='combined',threshold=NA,n=NA){
   
   if (method=='weighthres'){
     for (i in 1:nrow(sim_mat)){
-      sel<-ifelse(abs(sim_mat[i,])>threshold,1,0)[-i]
-      neighbours[[i]]<-which(sel==1)
+      sel<-ifelse(abs(sim_mat[i,])>threshold,1,0)
+      ind<-which(sel==1)
+      neighbours[[i]]<-ind[which(ind!=i)]
     }
   }else{
     if(method=='bestn'){
       for (i in 1:nrow(sim_mat)){
-        neighbours[[i]]<-order(sim_mat[i,],decreasing = T)[-i][1:n]
+        ord<-order(abs(sim_mat[i,]),decreasing = T)
+        neighbours[[i]]<-ord[which(ord!=i)][1:n]
       }
     }else{
       for(i in 1:nrow(sim_mat)){
-        sel.w<-which(ifelse(abs(sim_mat[i,])>threshold,1,0)[-i]==1)
-        sel.b<-order(sim_mat[i,],decreasing = T)[-i][1:n]
+        ind.w<-which(ifelse(abs(sim_mat[i,])>threshold,1,0)==1)
+        sel.w<-ind.w[which(ind.w!=i)]
+        ord.b<-order(abs(sim_mat[i,]),decreasing = T) 
+        sel.b<-ord.b[which(ord.b!=i)][1:n]
         neighbours[[i]]<-intersect(sel.w,sel.b)
       }
     }
   }
+  
+  null <- (1:length(neighbours))[lapply(neighbours,length) == 0]
+  if(length(null)!=0){
+    for (i in 1:length(null)){
+      index <- null[i]
+      neighbours[[index]] <- null[i]
+    }
+  }
+  
   return(neighbours)
 }
