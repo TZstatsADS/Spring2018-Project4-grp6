@@ -53,7 +53,18 @@ Term: Spring 2018
 The report of entire project with the detailed analysis and explaination are shown in the main.rmd file of the doc folder.
 
 
-**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
+**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
+
+1. Chandak, Anshuma : 
+2. He, Shan : 
+3. Li, Hongyu : 
+4. Liu, Shiyu :
+5. Zhang, Junkai :
+
+References: 
+1.
+2.
+
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
