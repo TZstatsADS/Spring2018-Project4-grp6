@@ -17,7 +17,7 @@ Term: Spring 2018
 
 + Project summary: 
 
-    For this project, we are given two algorithms to perform collaborative filtering, and there are respectively           Memory-based Algorithm and Model-based Algorithm. In the aspect of data set, we have the Microsoft Web Dataset and     Each Movie Dataset, which are respectively applied various methods to make prediction. After having all the            predictions, we finally calculated the evaluation of them by different evaluation methods. Lastly, we put all the      statistics together and make the comparison. 
+    For this project, we are given two algorithms to perform collaborative filtering, and they are -          Memory-based Algorithm and Model-based Algorithm. With respect to the data sets, we have the Microsoft Web Dataset and     EachMovie Dataset. We applied three similarity weights - *Spearman Correlation , Mean squared difference, SimRank* and three methods of selecting neighbours - *Weight Threshold, Best-n-predictor, Combined* as part of memory based algorithm on both datasets, in order to make predictions. For model based algorithm, we made use of Clustering Modeling.  After having all the            predictions, we finally evaluated each algorithm by Rank Score (for MS Data) & Mean Absolute Error (for EachMovie data). Lastly, we put all the      statistics together and make the comparison. 
   
     Here is what we do on each of the two datasets:
 
