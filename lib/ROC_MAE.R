@@ -20,6 +20,9 @@ evaluation_mae <- function(pred_mat, Movie_test){
   ## Input: pred_mat - predicted value
   ##        Movie_test - test data matrix
   ## Output: MAE
+  for (i in 1:nrow(pred_mat)){
+    pred_mat[i,]<-ifelse(pred_mat[i,]==0,NA,pred_mat[i,])
+  }
   mae <- mean(abs(pred_mat - Movie_test), na.rm = T)
   return(mae)
 }
