@@ -40,7 +40,7 @@ For this project, we are given two algorithms to perform collaborative filtering
         Model-based Algorithm: Cluster Models
         
 
-      Then, here are our results for Memory-based Algorithm: (MS dataset and Movie dataset)
+      Here are the results for Memory-based Algorithm: (MS dataset and Movie dataset)
 [MS](http://www.columbia.edu/~hl3099/ms_heatmap.html)    
 ![MS](figs/ms.jpg)
 
@@ -55,9 +55,9 @@ For this project, we are given two algorithms to perform collaborative filtering
 The report of entire project with the detailed analysis and explaination are shown in the main.rmd file of the doc folder.
 
 
-**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. The following is the details about what each mumber did. 
+**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. The following is the details about what each member did: 
 
-1. Chandak, Anshuma : Wrote the MAE function and helped with the entire Model-based Algorithm, the application of prediction function, and edited the ReadMe file.
+1. Chandak, Anshuma : Wrote the MAE function, and helped with the entire Model-based Algorithm, the application of prediction function, and edited the ReadMe file.
 
 2. He, Shan : Wrote the Spearman function and ran the procedure of Movie evaluation on both the similarity weights, and wrote the ReadMe and main files. 
 
