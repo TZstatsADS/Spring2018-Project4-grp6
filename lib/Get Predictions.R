@@ -1,10 +1,6 @@
 source("prediction.R")
 source("find_neighbours.R")
 
-library(Metrics)
-
-library(pROC)
-
 ######## Spearman
 #MS_weights <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/Each Movie Case/MS_Spearman_weights.csv")
 
