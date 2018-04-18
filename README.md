@@ -65,7 +65,7 @@ The report of entire project with the detailed analysis and explaination are sho
 
 4. Liu, Shiyu : Wrote the entire Model-based Algorithm, the transformation of Movie data and the Mean-square-difference similirity function, and also ran the evaluation of the Model-based Algorithm.
 
-5. Zhang, Junkai : Wrote the transformation of Microsoft Web data, the SimRank function and ran the procedure of SimRank evaluation, and also made the powerpoint.
+5. Zhang, Junkai : Wrote the transformation of Microsoft Web data, the SimRank function and ran the procedure of Memory-based model of SimRank evaluation, and also conducted the analysis of result and made the powerpoint.
 
 References: 
 + [Empirical analysis of predictive algorithms for collaborative filtering](doc/Paper_1_MS.pdf)
