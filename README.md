@@ -40,7 +40,7 @@ For this project, we are given two algorithms to perform collaborative filtering
         Model-based Algorithm: Cluster Models
         
 
-      Then, here are our results for Memory-based Algorithm:
+      Then, here are our results for Memory-based Algorithm: (MS dataset and Movie dataset)
     
       ![image](figs/ms.png)
       
@@ -48,7 +48,7 @@ For this project, we are given two algorithms to perform collaborative filtering
       
       Here is the result for Model-based Algorithm:
 
-      ![screenshot](figs/Model.jpg)
+      The MAE evaluation is 1.47.
 	
 
 The report of entire project with the detailed analysis and explaination are shown in the main.rmd file of the doc folder.
