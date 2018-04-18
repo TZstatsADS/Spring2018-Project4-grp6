@@ -62,9 +62,10 @@ The report of entire project with the detailed analysis and explaination are sho
 5. Zhang, Junkai :
 
 References: 
-1.[Microsoft Research Paper](doc/Paper_1_MS.pdf) 
-2.
-
++ [Empirical analysis of predictive algorithms for collaborative filtering](doc/Paper_1_MS.pdf)
++ [An Algorithmic Framework for performing collborative filtering](doc/Paper_2_Movie.pdf)
++ [SimRank: A Measure of Structural-Context Similarity](doc/SimRank.pdf)
++ [An Experimental Evaluation of SimRank-based Similarity Search Algorithms](doc/SimRank_Paper2.pdf)
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
