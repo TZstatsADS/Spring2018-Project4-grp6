@@ -42,9 +42,9 @@ For this project, we are given two algorithms to perform collaborative filtering
 
       Then, here are our results for Memory-based Algorithm: (MS dataset and Movie dataset)
     
-      ![image](figs/ms.png)
+![MS](figs/ms.jpg)
       
-      ![image](figs/movie.png)
+![Movie](figs/movie.jpg)
       
       Here is the result for Model-based Algorithm:
 
