@@ -144,3 +144,104 @@ eval_mae_MSD_combined
 RunningTime6 <- TimeEnd6 - TimeStart6
 RunningTime6
 
+# Get Prediction for SimRank
+#########################################################
+#simrank.fin.mat1 <- generate.simrank.mat(c=0.8,k=5,traindata = Movie.train.data,testdata = Movie.test.data)
+###########################################################
+# Find neighbor Function
+neigh <- find_neighbours(simrank.fin.mat1,method='bestn',n=60)
+# Prediction Function
+preds <- prediction(Movie.train.data[,-1],simrank.fin.mat1,neigh)
+# MAE
+MAE <- evaluation_mae(pred_mat = preds,Movie_test = Movie.test.data[,-1])
+MAE
+
+###########################################################
+# Find neighbor Function
+neigh <- find_neighbours(simrank.fin.mat1,method='weighthres',threshold = 0.3)
+# Prediction Function
+preds <- prediction(Movie.train.data[,-1],simrank.fin.mat1,neigh)
+# MAE
+MAE <- evaluation_mae(pred_mat = preds,Movie_test = Movie.test.data[,-1])
+MAE
+
+###########################################################
+# Find neighbor Function
+neigh <- find_neighbours(simrank.fin.mat1,method='combined',n=60,threshold = 0.3)
+# Prediction Function
+preds <- prediction(Movie.train.data[,-1],simrank.fin.mat1,neigh)
+# MAE
+MAE <- evaluation_mae(pred_mat = preds,Movie_test = Movie.test.data[,-1])
+MAE
+
+######################################################################################################################
+#simrank.fin.mat2 <- generate.simrank.mat(c=0.6,k=5,traindata = Movie.train.data,testdata = Movie.test.data)
+###########################################################
+# Find neighbor Function
+neigh <- find_neighbours(simrank.fin.mat2,method='bestn',n=60)
+# Prediction Function
+preds <- prediction(Movie.train.data[,-1],simrank.fin.mat2,neigh)
+# MAE
+MAE <- evaluation_mae(pred_mat = preds,Movie_test = Movie.test.data[,-1])
+MAE
+
+###########################################################
+# Find neighbor Function
+neigh <- find_neighbours(simrank.fin.mat2,method='weighthres',threshold = 0.3)
+# Prediction Function
+preds <- prediction(Movie.train.data[,-1],simrank.fin.mat2,neigh)
+# MAE
+MAE <- evaluation_mae(pred_mat = preds,Movie_test = Movie.test.data[,-1])
+MAE
+
+###########################################################
+# Find neighbor Function
+neigh <- find_neighbours(simrank.fin.mat2,method='combined',n=60,threshold = 0.3)
+# Prediction Function
+preds <- prediction(Movie.train.data[,-1],simrank.fin.mat2,neigh)
+# MAE
+MAE <- evaluation_mae(pred_mat = preds,Movie_test = Movie.test.data[,-1])
+MAE
+
+######################################################################################################################
+#simrank.fin.mat3 <- generate.simrank.mat(c=0.8,k=10,traindata = Movie.train.data,testdata = Movie.test.data)
+###########################################################
+# Find neighbor Function
+neigh <- find_neighbours(simrank.fin.mat3,method='bestn',n=60)
+# Prediction Function
+preds <- prediction(Movie.train.data[,-1],simrank.fin.mat3,neigh)
+# MAE
+MAE <- evaluation_mae(pred_mat = preds,Movie_test = Movie.test.data[,-1])
+MAE
+
+###########################################################
+# Find neighbor Function
+neigh <- find_neighbours(simrank.fin.mat3,method='weighthres',threshold = 0.3)
+# Prediction Function
+preds <- prediction(Movie.train.data[,-1],simrank.fin.mat3,neigh)
+# MAE
+MAE <- evaluation_mae(pred_mat = preds,Movie_test = Movie.test.data[,-1])
+MAE
+
+###########################################################
+# Find neighbor Function
+neigh <- find_neighbours(simrank.fin.mat3,method='combined',n=60,threshold = 0.3)
+# Prediction Function
+preds <- prediction(Movie.train.data[,-1],simrank.fin.mat3,neigh)
+# MAE
+MAE <- evaluation_mae(pred_mat = preds,Movie_test = Movie.test.data[,-1])
+MAE
+TimeEnd<-Sys.time()
+RunningTime<-TimeEnd-TimeStart
+print(RunningTime)
+
+######################################################################################################################
+simrank.fin.mat4 <- generate.simrank.mat(c=0.8,k=5,traindata = MS.train.data,testdata = MS.test.data)
+
+######################################################################################################################
+simrank.fin.mat5 <- generate.simrank.mat(c=0.6,k=5,traindata = MS.train.data,testdata = MS.test.data)
+
+######################################################################################################################
+simrank.fin.mat6 <- generate.simrank.mat(c=0.8,k=10,traindata = MS.train.data,testdata = MS.test.data)
+
+
