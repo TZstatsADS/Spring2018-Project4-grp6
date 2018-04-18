@@ -48,7 +48,7 @@ For this project, we are given two algorithms to perform collaborative filtering
       
       Here is the result for Model-based Algorithm:
 
-      The MAE evaluation is 1.47.
+      The MAE evaluation is 1.44.
 	
 
 The report of entire project with the detailed analysis and explaination are shown in the main.rmd file of the doc folder.

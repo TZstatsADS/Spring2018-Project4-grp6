@@ -2,7 +2,9 @@
 title: "Project 4 - Collaborative Filtering Algorithm"
 author: "Team 6"
 date: "4/18/2017"
-output: pdf_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 
@@ -348,11 +350,14 @@ Then, we implement the function into all the weights we got.
 ```{r eval=FALSE}
 ############## Movie data set
 ######## Spearman Correlation
-Movie_weights <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/Each Movie Case/Movie_Spearman_weights.csv")
+Movie_weights <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/
+                          Each Movie Case/Movie_Spearman_weights.csv")
 
-data1 <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/Each Movie Case/Movie_data_train.csv")
+data1 <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/
+                  Each Movie Case/Movie_data_train.csv")
 
-movietest <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/Each Movie Case/Movie_data_test.csv")
+movietest <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/
+                      Each Movie Case/Movie_data_test.csv")
 movietest <- movietest[,-1]
 
 numeric_movietest <- NULL
@@ -366,34 +371,43 @@ Movie_neighbors <- find_neighbours(Movie_weights[,-1], method = "bestn" , n = 60
 movie_prediction <- prediction(data1[, -1], Movie_weights[, -1], Movie_neighbors)
 
 # neighbors of method weighthres
-movie_neighbors_weighthres <- find_neighbours(Movie_weights[,-1], method = "weighthres" , threshold = 0.3)
+movie_neighbors_weighthres <- find_neighbours(Movie_weights[,-1], 
+                                              method = "weighthres" , threshold = 0.3)
   
 movie_prediction_weighthres <- prediction(data1[, -1], Movie_weights[, -1], movie_neighbors_weighthres)
 
 # neighbors of method combined
-movie_neighbors_combined <- find_neighbours(Movie_weights[,-1], method = "combined" , threshold = 0.3, n = 60)
+movie_neighbors_combined <- find_neighbours(Movie_weights[,-1], method = "combined" ,
+                                            threshold = 0.3, n = 60)
 
 movie_prediction_combined <- prediction(data1[, -1], Movie_weights[, -1], movie_neighbors_combined)
 
 
 ######### MSD
-Movie_MSD_weights <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/Each Movie Case/Movie_msd_weight.csv")
+Movie_MSD_weights <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/
+                              Each Movie Case/Movie_msd_weight.csv")
 
 # neighbors of method bestn
-Movie_MSD_neighbors <- find_neighbours(Movie_MSD_weights[,-1], method = "bestn" , n = 60)
+Movie_MSD_neighbors <- find_neighbours(Movie_MSD_weights[,-1], method = "bestn" , 
+                                       n = 60)
 
-movie_prediction_MSD <- prediction(data1[, -1], Movie_MSD_weights[, -1], Movie_MSD_neighbors)
+movie_prediction_MSD <- prediction(data1[, -1], Movie_MSD_weights[, -1],
+                                   Movie_MSD_neighbors)
 
 
 # neighbors of method weighthres
-movie_MSD_neighbors_weighthres <- find_neighbours(Movie_MSD_weights[,-1], method = "weighthres" , threshold = 0.3)
+movie_MSD_neighbors_weighthres <- find_neighbours(Movie_MSD_weights[,-1], method =
+                                                    "weighthres" , threshold = 0.3)
 
-movie_prediction_MSD_weighthres <- prediction(data1[, -1], Movie_MSD_weights[, -1], movie_MSD_neighbors_weighthres)
+movie_prediction_MSD_weighthres <- prediction(data1[, -1], Movie_MSD_weights[, -1],
+                                              movie_MSD_neighbors_weighthres)
 
 # neighbors of method combined
-movie_MSD_neighbors_combined <- find_neighbours(Movie_MSD_weights[,-1], method = "combined" , threshold = 0.3, n = 60)
+movie_MSD_neighbors_combined <- find_neighbours(Movie_MSD_weights[,-1], method =
+                                                  "combined" , threshold = 0.3, n = 60)
 
-movie_prediction_MSD_combined <- prediction(data1[, -1], Movie_MSD_weights[, -1], movie_MSD_neighbors_combined)
+movie_prediction_MSD_combined <- prediction(data1[, -1], Movie_MSD_weights[, -1],
+                                            movie_MSD_neighbors_combined)
 
 
 ####### MS_data #########
@@ -519,9 +533,12 @@ clusterEM<- function (m_train, tau, C){
     gamma[2, j, c]<-runif(1, 0, 1-gamma[1, j, c])
     gamma[3, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c])
     gamma[4, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c])
-    gamma[5, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c]-gamma[4, j, c])
-    gamma[6, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c]-gamma[4, j, c]-gamma[5, j, c])
-    gamma[7, j, c]<-1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c]-gamma[4, j, c]-gamma[5, j, c]-gamma[6, j, c]
+    gamma[5, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c]-
+                            gamma[4, j, c])
+    gamma[6, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c]-
+                            gamma[4, j, c]-gamma[5, j, c])
+    gamma[7, j, c]<-1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c]-gamma[4, j, c]-
+      gamma[5, j, c]-gamma[6, j, c]
     }
   }
   
@@ -628,38 +645,44 @@ Then, we calculate the evaluations for the required the datasets.
 ######## Spearman
 dataframe_movie_prediction <- data.frame(movie_prediction)
 
-eval_mae_Spearman <- evaluation_mae(as.matrix(dataframe_movie_prediction), as.matrix(numeric_movietest))
+eval_mae_Spearman <- evaluation_mae(as.matrix(dataframe_movie_prediction),
+                                    as.matrix(numeric_movietest))
 eval_mae_Spearman
 
 # neighbors of method weighthres
 dataframe_movie_prediction_weighthres <- data.frame(movie_prediction_weighthres)
 
-eval_mae_Spearman_weighthres <- evaluation_mae(as.matrix(dataframe_movie_prediction_weighthres), as.matrix(numeric_movietest))
+eval_mae_Spearman_weighthres <- evaluation_mae(as.matrix(dataframe_movie_prediction_weighthres),
+                                               as.matrix(numeric_movietest))
 eval_mae_Spearman_weighthres
 
 # neighbors of method combined
 dataframe_movie_prediction_combined <- data.frame(movie_prediction_combined)
 
-eval_mae_Spearman_combined <- evaluation_mae(as.matrix(dataframe_movie_prediction_combined), as.matrix(numeric_movietest))
+eval_mae_Spearman_combined <- evaluation_mae(as.matrix(dataframe_movie_prediction_combined),
+                                             as.matrix(numeric_movietest))
 eval_mae_Spearman_combined
 
 ######### MSD
 # neighbors of method bestn
 dataframe_movie_MSD_prediction <- data.frame(movie_prediction_MSD)
 
-eval_mae_MSD <- evaluation_mae(as.matrix(dataframe_movie_MSD_prediction), as.matrix(numeric_movietest))
+eval_mae_MSD <- evaluation_mae(as.matrix(dataframe_movie_MSD_prediction),
+                               as.matrix(numeric_movietest))
 eval_mae_MSD
 
 # neighbors of method weighthres
 dataframe_movie_prediction_MSD_weighthres <- data.frame(movie_prediction_MSD_weighthres)
 
-eval_mae_MSD_weighthres <- evaluation_mae(as.matrix(dataframe_movie_prediction_MSD_weighthres), as.matrix(numeric_movietest))
+eval_mae_MSD_weighthres <- evaluation_mae(as.matrix(dataframe_movie_prediction_MSD_weighthres),
+                                          as.matrix(numeric_movietest))
 eval_mae_MSD_weighthres
 
 # neighbors of method combined
 dataframe_movie_prediction_MSD_combined <- data.frame(movie_prediction_MSD_combined)
 
-eval_mae_MSD_combined <- evaluation_mae(as.matrix(dataframe_movie_prediction_MSD_combined), as.matrix(numeric_movietest))
+eval_mae_MSD_combined <- evaluation_mae(as.matrix(dataframe_movie_prediction_MSD_combined),
+                                        as.matrix(numeric_movietest))
 eval_mae_MSD_combined
 ```
 
@@ -687,8 +710,10 @@ pred_func <- function(m_train, gamma, mu, pi){
   for(i in 1:I){
     for(j in 1:J){
       cluster <- user_cluster[i]
-      predictions[i,j] <- sum(c(gamma[1, j, cluster], gamma[2, j, cluster], gamma[3, j, cluster], gamma[4, j, cluster],
-                            gamma[5, j, cluster], gamma[6, j, cluster], gamma[7, j, cluster])*c(0, 1, 2, 3, 4, 5, 6))
+      predictions[i,j] <- sum(c(gamma[1, j, cluster], gamma[2, j, cluster], 
+                                gamma[3, j, cluster], gamma[4, j, cluster],
+                            gamma[5, j, cluster], gamma[6, j, cluster], 
+                            gamma[7, j, cluster])*c(0, 1, 2, 3, 4, 5, 6))
     }
   }       
   predictions<-as.data.frame(predictions)
@@ -757,12 +782,26 @@ MAEEEE<-evaluation_mae(pre, m_test)
 
 Here are the plots we created for showing our results for the Movie dataset and Microsoft Web dataset respectively.
 
-```{r}
+```{r eval=FALSE}
+ms<-read.csv('../output/ms_summary.csv',header=T,sep=',')
+movie<-read.csv('../output/movie_summary.csv',header=T,sep=',')
+rownames(ms)<-ms[,1]
+ms<-ms[,-1]
+rownames(movie)<-movie[,1]
+movie<-movie[,-1]
 
+library(heatmaply)
+library(RColorBrewer)
+b<-brewer.pal(n = 8, name = "Blues")
+heatmaply(ms,draw_cellnote = TRUE,colors =b,dendrogram='none',
+          fontsize_row = 14, fontsize_col = 14,cellnote_size = 20)
+heatmaply(movie,draw_cellnote = TRUE,colors =b,dendrogram='none',
+          fontsize_row = 14, fontsize_col = 14,cellnote_size = 20)
 ```
 
+![Ms_data](../figs/ms.jpg)
 
-
+![Ms_data](../figs/movie.jpg)
 
 
 
