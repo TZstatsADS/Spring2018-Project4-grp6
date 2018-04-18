@@ -16,7 +16,7 @@ getwd()
 
 Here, we load in all the data we need for this project. There are four datasets, and they are respectively the testing and training sets of Microsoft Web data and Movie data.
 
-```{r}
+```{r eval=FALSE}
 movie_train<-read.csv("../data/data_sample/eachmovie_sample/data_train.csv")
 movie_test<-read.csv("../data/data_sample/eachmovie_sample/data_test.csv")
 
@@ -28,7 +28,7 @@ MS_test<-read.csv("../data/data_sample/MS_sample/data_test.csv")
 After loading the datasets, we transform the datasets so that they can be manipulated and applied in various functions later.
 
 Here is how we transform the movie dataset.
-```{r}
+```{r eval=FALSE}
 Transformer <- function(data.set){
   columns.data <- sort(unique(data.set$Movie))
   rows.data <- sort(unique(data.set$User))
@@ -69,7 +69,7 @@ write.csv(m_test, "Movie_data_test.csv")
 
 Here is how we transform the Microsoft dataset.
 
-```{r}
+```{r eval=FALSE}
 MS.Data.Transform.Function <- function(data){
   usernum <- which(data$V1 == 'C')
   userid <- data$V2[usernum]
@@ -109,7 +109,7 @@ First of all, We created three functions for similarity weighting.
 
 1. Spearman Correlation:
 
-```{r}
+```{r eval=FALSE}
 MS_data <- read.csv("../data/MS_data_train.csv")
 
 new_movie_data <- read.csv("../data/Movie_data_train.csv")
@@ -132,7 +132,7 @@ weight_Spearman(new_movie_data, "Movie")
 
 2. Mean-square-difference:
 
-```{r}
+```{r eval=FALSE}
 # Reduced the computational time significantly by assigning arguments outside 
 # the loops, initiating the output matrix r with NA first, and using apply 
 # to mean() outside the loops.
@@ -168,7 +168,7 @@ mean_sq_diff <- function(matrix){
 
 3. SimRank:
 
-```{r}
+```{r eval=FALSE}
 MS.train.data <- read.csv("MS_data_train.csv",header=T)
 MS.test.data <- read.csv("MS_data_test.csv",header=T)
 
@@ -263,7 +263,7 @@ https://drive.google.com/drive/u/1/folders/1AEJbWGCD507uqtJ5hWNZD9nv8hRBv44v
 
 Here are the find neighbors function and the prediction function:
 
-```{r}
+```{r eval=FALSE}
 find_neighbours<-function(sim_mat,method='combined',threshold=NA,n=NA){
   
   #####Input: similarity matrix
@@ -345,7 +345,7 @@ prediction<-function(df,sim_mat,nbor_list){
 
 Then, we implement the function into all the weights we got.
 
-```{r}
+```{r eval=FALSE}
 ############## Movie data set
 ######## Spearman Correlation
 Movie_weights <- read.csv("C:/StudyLife/Columbia/STAT 5243/Local Project 4/Each Movie Case/Movie_Spearman_weights.csv")
@@ -394,18 +394,198 @@ movie_prediction_MSD_weighthres <- prediction(data1[, -1], Movie_MSD_weights[, -
 movie_MSD_neighbors_combined <- find_neighbours(Movie_MSD_weights[,-1], method = "combined" , threshold = 0.3, n = 60)
 
 movie_prediction_MSD_combined <- prediction(data1[, -1], Movie_MSD_weights[, -1], movie_MSD_neighbors_combined)
+
+
+####### MS_data #########
+
+#######Spearman+weighthreshold
+df<-read.csv('MS_data_train.csv',header=T,sep=',')[,-1]
+df_test<-read.csv('MS_data_test.csv',header=T,sep=',')[,-1]
+##import similarity
+sim_mat<-read.csv('MS_spearman_weights.csv',header=T,sep=',')[,-1]
+##find neighbourhoods
+tm<-system.time(nb<-find_neighbours(sim_mat,method='weighthres',threshold=0.03)
+##prediction
+df<-as.matrix.data.frame(df)
+tm2<-system.time(pred<-prediction(df,sim_mat,nb))
+r<-rank_score(pred, df_test, d=0,alpha=134)
+
+
+#######Spearman+bestn
+df<-read.csv('MS_data_train.csv',header=T,sep=',')[,-1]
+df_test<-read.csv('MS_data_test.csv',header=T,sep=',')[,-1]
+##import similarity
+sim_mat<-read.csv('MS_spearman_weights.csv',header=T,sep=',')[,-1]
+##find neighbourhoods
+tm<-system.time(nb<-find_neighbours(sim_mat,method='bestn',n=40)
+##prediction
+df<-as.matrix.data.frame(df)
+tm2<-system.time(pred<-prediction(df,sim_mat,nb))
+r<-rank_score(pred, df_test, d=0,alpha=134)
+
+
+
+#######Spearman+combined
+df<-read.csv('MS_data_train.csv',header=T,sep=',')[,-1]
+df_test<-read.csv('MS_data_test.csv',header=T,sep=',')[,-1]
+##import similarity
+sim_mat<-read.csv('MS_spearman_weights.csv',header=T,sep=',')[,-1]
+##find neighbourhoods
+tm<-system.time(nb<-find_neighbours(sim_mat,method='combined',n=40,threshold=0.03)
+##prediction
+df<-as.matrix.data.frame(df)
+tm2<-system.time(pred<-prediction(df,sim_mat,nb))
+r<-rank_score(pred, df_test, d=0,alpha=134)
+
+
+
+
+#######MSD+weighthreshold
+df<-read.csv('MS_data_train.csv',header=T,sep=',')[,-1]
+df_test<-read.csv('MS_data_test.csv',header=T,sep=',')[,-1]
+##import similarity
+sim_mat<-read.csv('MS_msd_weights.csv',header=T,sep=',')[,-1]
+##find neighbourhoods
+tm<-system.time(nb<-find_neighbours(sim_mat,method='weighthres',threshold=0.03)
+##prediction
+df<-as.matrix.data.frame(df)
+tm2<-system.time(pred<-prediction(df,sim_mat,nb))
+r<-rank_score(pred, df_test, d=0,alpha=134)
+                
+                
+#######MSD+bestn
+df<-read.csv('MS_data_train.csv',header=T,sep=',')[,-1]
+df_test<-read.csv('MS_data_test.csv',header=T,sep=',')[,-1]
+##import similarity
+sim_mat<-read.csv('MS_msd_weights.csv',header=T,sep=',')[,-1]
+##find neighbourhoods
+tm<-system.time(nb<-find_neighbours(sim_mat,method='bestn',n=40)
+##prediction
+df<-as.matrix.data.frame(df)
+tm2<-system.time(pred<-prediction(df,sim_mat,nb))
+r<-rank_score(pred, df_test, d=0,alpha=134)
+                                
+                                
+                                
+#######MSD+combined
+df<-read.csv('MS_data_train.csv',header=T,sep=',')[,-1]
+df_test<-read.csv('MS_data_test.csv',header=T,sep=',')[,-1]
+##import similarity
+sim_mat<-read.csv('MS_msd_weights.csv',header=T,sep=',')[,-1]
+##find neighbourhoods
+tm<-system.time(nb<-find_neighbours(sim_mat,method='combined',n=40,threshold=0.03)
+##prediction
+df<-as.matrix.data.frame(df)
+tm2<-system.time(pred<-prediction(df,sim_mat,nb))
+r<-rank_score(pred, df_test, d=0,alpha=134)
+
 ```
 
 
 ## Step 3: Clustering
 
+Here, we write out the Model-based Algorithm (Cluster Models) and apply it to the movie dataset.
+
+Here is all the procedure we have for this algorithm.
+
+
+```{r eval=FALSE}
+
+m_train_full<-read.csv(choose.files())
+m_test<-read.csv(choose.files())
+m_train<-m_train_full[, -1]
+m_test<-m_test[, -1]
+m_train<-m_train[1:100, 1:200]
+################ EM Algorithm#################
+
+clusterEM<- function (m_train, tau, C){
+  J <- ncol(m_train)
+  # C<-5 # choice of Groups 
+  I<-nrow(m_train)
+  ## initialize the mu and and gamma 
+  mu_int<-numeric(C)
+  gamma<-array(0, dim = c(7, J, C)) #7 vote, J movie, C cluster
+  for (c in 1:(C-1)) {
+    mu_int[c]<-runif(1, 0, 1-sum(mu_int))
+  }
+  
+  mu_int[C]<-1-sum(mu_int)
+  
+  
+  ## Problem's here
+  for( c in 1:C){
+    for(j in 1:J){
+    gamma[1, j, c]<-runif(1, 0, 1)
+    gamma[2, j, c]<-runif(1, 0, 1-gamma[1, j, c])
+    gamma[3, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c])
+    gamma[4, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c])
+    gamma[5, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c]-gamma[4, j, c])
+    gamma[6, j, c]<-runif(1, 0, 1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c]-gamma[4, j, c]-gamma[5, j, c])
+    gamma[7, j, c]<-1-gamma[1, j, c]-gamma[2, j, c]-gamma[3, j, c]-gamma[4, j, c]-gamma[5, j, c]-gamma[6, j, c]
+    }
+  }
+  
+  
+  pi<-matrix(NA, ncol = C, nrow= nrow(m_train)) # r = user, C = Group
+  
+  phi<-matrix(NA, ncol = C, nrow =I)
+  pi_pre <- matrix(0, nrow = I, ncol = C)
+  
+
+  
+  iter <- 1 #iteration
+  ITER<-200
+  check_conv <- Inf
+
+  while(check_conv > tau & iter < ITER){
+    for(i in 1:I){ #get phi
+      sub_mu_phi <- array(0,C) 
+      for(j in 1:20) {
+        #i<-1; j <- 3
+        sub_mu_phi <- sub_mu_phi + log(gamma[m_train[i,j]+1, j,])
+        #print(sub_mu_phi)
+      }
+      phi[i, ] <- exp(sub_mu_phi)
+    }
+    tmp_1 <- mu_int * phi
+    pi <- tmp_1/apply(tmp_1, 1, sum)
+    
+
+    mu_int <- apply(pi, 2, sum)/I
+    
+    for(c in 1:C){ 
+      for(j in 1:J){
+
+        gamma[1, j, c]<-sum(pi[, c]*(m_train[, j] == 0))/sum(pi[, c])
+        gamma[2, j, c]<-sum(pi[, c]*(m_train[, j] == 1))/sum(pi[, c])
+        gamma[3, j, c]<-sum(pi[, c]*(m_train[, j] == 2))/sum(pi[, c])
+        gamma[4, j, c]<-sum(pi[, c]*(m_train[, j] == 3))/sum(pi[, c])
+        gamma[5, j, c]<-sum(pi[, c]*(m_train[, j] == 4))/sum(pi[, c])
+        gamma[6, j, c]<-sum(pi[, c]*(m_train[, j] == 5))/sum(pi[, c])
+        gamma[7, j, c]<-sum(pi[, c]*(m_train[, j] == 6))/sum(pi[, c])
+      }
+    }
+    
+    check_conv <- norm(pi - pi_pre)
+    print(check_conv)
+    print(iter)
+    
+    pi_pre <- pi
+    iter = iter + 1
+  }
+  
+  return(list(mu = mu_int, gamma= gamma, pi = pi))
+}
+
+cl<-clusterEM(m_train, 5, 3)
+```
 
 
 ## Step 4: Evaluation
 
 We firstly write out the functions for the two simulation methods, which are respectively Rank Score and MAE.
 
-```{r}
+```{r eval=FALSE}
 ## MAE
 evaluation_mae <- function(pred_mat, Movie_test){
   ## function to calculate mean absolute error of predicted value
@@ -439,6 +619,157 @@ rank_score<-function(pred,test,d,alpha){
   return(R)
 }
 ```
+
+
+Then, we calculate the evaluations for the required the datasets.
+
+
+```{r eval=FALSE}
+######## Spearman
+dataframe_movie_prediction <- data.frame(movie_prediction)
+
+eval_mae_Spearman <- evaluation_mae(as.matrix(dataframe_movie_prediction), as.matrix(numeric_movietest))
+eval_mae_Spearman
+
+# neighbors of method weighthres
+dataframe_movie_prediction_weighthres <- data.frame(movie_prediction_weighthres)
+
+eval_mae_Spearman_weighthres <- evaluation_mae(as.matrix(dataframe_movie_prediction_weighthres), as.matrix(numeric_movietest))
+eval_mae_Spearman_weighthres
+
+# neighbors of method combined
+dataframe_movie_prediction_combined <- data.frame(movie_prediction_combined)
+
+eval_mae_Spearman_combined <- evaluation_mae(as.matrix(dataframe_movie_prediction_combined), as.matrix(numeric_movietest))
+eval_mae_Spearman_combined
+
+######### MSD
+# neighbors of method bestn
+dataframe_movie_MSD_prediction <- data.frame(movie_prediction_MSD)
+
+eval_mae_MSD <- evaluation_mae(as.matrix(dataframe_movie_MSD_prediction), as.matrix(numeric_movietest))
+eval_mae_MSD
+
+# neighbors of method weighthres
+dataframe_movie_prediction_MSD_weighthres <- data.frame(movie_prediction_MSD_weighthres)
+
+eval_mae_MSD_weighthres <- evaluation_mae(as.matrix(dataframe_movie_prediction_MSD_weighthres), as.matrix(numeric_movietest))
+eval_mae_MSD_weighthres
+
+# neighbors of method combined
+dataframe_movie_prediction_MSD_combined <- data.frame(movie_prediction_MSD_combined)
+
+eval_mae_MSD_combined <- evaluation_mae(as.matrix(dataframe_movie_prediction_MSD_combined), as.matrix(numeric_movietest))
+eval_mae_MSD_combined
+```
+
+
+For the cluster, the predictions and evaluations are shown here:
+
+```{r eval=FALSE}
+#Generating prediction
+mu <- cl$mu
+gamma<-cl$gamma
+pi<-cl$pi
+
+
+pred_func <- function(m_train, gamma, mu, pi){
+  item_test <- colnames(m_train)
+  # order <- match(item_test, items)
+  I <- nrow(m_train)
+  J <- ncol(m_train)
+  predictions <- matrix(numeric(I*J), nrow = I, ncol = J)
+  #colnames(predictions) <- item_test
+  
+  user_cluster <- apply(pi, 1, which.max)
+  error <- 0
+  
+  for(i in 1:I){
+    for(j in 1:J){
+      cluster <- user_cluster[i]
+      predictions[i,j] <- sum(c(gamma[1, j, cluster], gamma[2, j, cluster], gamma[3, j, cluster], gamma[4, j, cluster],
+                            gamma[5, j, cluster], gamma[6, j, cluster], gamma[7, j, cluster])*c(0, 1, 2, 3, 4, 5, 6))
+    }
+  }       
+  predictions<-as.data.frame(predictions)
+  return(predictions)
+}
+NN<-apply(predictions, 1, is.na)
+MM<-apply(m_test, 1, is.na)
+pre<-pred_func(m_train, gamma, mu, pi)
+
+clusterMAE<-function(m_test, prediction){
+  J <- ncol(m_test)
+  # C<-5 # choice of Groups 
+  I<-nrow(m_test)
+  MAE<-abs(m_test-pre)
+  return(sum(MAE)/(I*J))
+}
+
+evaluation_mae <- function(pred_mat, Movie_test){
+  ## function to calculate mean absolute error of predicted value
+  ## Input: pred_mat - predicted value
+  ##        Movie_test - test data matrix
+  ## Output: MAE
+  pred_mat<-pre
+  Movie_test<-m_test
+  for (i in 1:nrow(pred_mat)){
+    Movie_test[i,]<-ifelse(Movie_test[i,]==0,NA,Movie_test)
+  }
+  mae <- as.matrix(abs(pred_mat - Movie_test))
+  mae<-mean(mae, na.rm = TRUE)
+  return(mae)
+}
+
+evaluation_mae2 <- function(pred_mat, Movie_test, Movie_train){
+  ## function to calculate mean absolute error of predicted value
+  ## Input: pred_mat - predicted value
+  ##        Movie_test - test data matrix
+  ## Output: MAE
+  for (i in 1:nrow(pred_mat)){
+    Movie_test[i,]<-ifelse(Movie_train[i,]!=0,NA,Movie_test)
+  }
+  mae <- as.matrix(abs(pred_mat - Movie_test))
+  return(mae)
+}
+
+
+pre<-clusterEM(m_train, 5, 5)
+pre<-pred_func(m_train, pre$gamma, pre$mu, pre$pi)
+A<-evaluation_mae2(pre, m_test, m_train)
+
+### CV
+
+C_CV<-seq(20,30, 2)
+MAE<-numeric(10)
+for (i in 1:10){
+  pre<-clusterEM(m_train, 5, C_CV[i])
+  pre<-pred_func(m_train, pre$gamma, pre$mu, pre$pi)
+  MAE[i]<-evaluation_mae(pre, m_test)
+}
+
+pre<-clusterEM(m_train, 5, 60)
+pre<-pred_func(m_train, pre$gamma, pre$mu, pre$pi)
+MAEEEE<-evaluation_mae(pre, m_test)
+```
+
+## Step5: Results
+
+Here are the plots we created for showing our results for the Movie dataset and Microsoft Web dataset respectively.
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
 
 
 

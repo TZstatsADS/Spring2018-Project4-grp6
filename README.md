@@ -53,13 +53,17 @@ For this project, we are given two algorithms to perform collaborative filtering
 The report of entire project with the detailed analysis and explaination are shown in the main.rmd file of the doc folder.
 
 
-**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
+**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. The following is the details about what each mumber did. 
 
-1. Chandak, Anshuma : 
-2. He, Shan : 
-3. Li, Hongyu : 
-4. Liu, Shiyu :
-5. Zhang, Junkai :
+1. Chandak, Anshuma : Wrote the MAE function and helped with the entire Model-based Algorithm, the application of prediction function, and edited the ReadMe file.
+
+2. He, Shan : Wrote the Spearman function and ran the procedure of Movie evaluation on both the similarity weights, and wrote the ReadMe and main files. 
+
+3. Li, Hongyu : Wrote the prediction and find neighbors functions, helped with the entire procedure of Model-based Algorithm and ran the process of MS evaluation and Movie evaluation.
+
+4. Liu, Shiyu : Wrote the entire Model-based Algorithm, the transformation of Movie data and the Mean-square-difference similirity function, and also ran the evaluation of the Model-based Algorithm.
+
+5. Zhang, Junkai : Wrote the transformation of Microsoft Web data, the SimRank function and ran the procedure of SimRank evaluation, and also made the powerpoint.
 
 References: 
 + [Empirical analysis of predictive algorithms for collaborative filtering](doc/Paper_1_MS.pdf)
