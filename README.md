@@ -40,10 +40,11 @@ For this project, we are given two algorithms to perform collaborative filtering
         Model-based Algorithm: Cluster Models
         
 
-      Then, here are our results for Memory-based Algorithm: ([MS dataset](http://www.columbia.edu/~hl3099/ms_heatmap.html) and [Movie dataset](http://www.columbia.edu/~hl3099/movie_heatmap.html))
-    
+      Then, here are our results for Memory-based Algorithm: (MS dataset and Movie dataset)
+[MS](http://www.columbia.edu/~hl3099/ms_heatmap.html)    
 ![MS](figs/ms.jpg)
-      
+
+[Movie](http://www.columbia.edu/~hl3099/movie_heatmap.html)      
 ![Movie](figs/movie.jpg)
       
       Here is the result for Model-based Algorithm:
